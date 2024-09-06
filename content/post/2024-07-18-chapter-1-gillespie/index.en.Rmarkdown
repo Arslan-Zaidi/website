@@ -26,20 +26,16 @@ S = p(S|SS) + p(S|SF) + p(S|SI)
 In words: the probability of S if an individual is SS (1), the probability of S if an individual is SF (1/2) and the probability of S if an individual is SI (1/2). A similar pattern can be repeated for the other 2 alleles. To calculate each of the frequencies we can just use the frequencies of each genotype from Table 1.2 (reproduced below):
 
 \textbf{Table 1.2 - Replicated from (Gillespie, 2004)}
-\begin{tabular}{ |c|c|c|c| } 
-\hline
-Genotype & Number & Frequency & Expected \\
-\hline
-SS & 141 & 0.4247 & 0.4096\\ 
-SF & 111 & 0.3343 & 0.3507 \\ 
-FF & 28 & 0.0843 & 0.0751\\ 
-SI & 32 & 0.0964 & 0.1101\\ 
-FI & 15 & 0.0452 & 0.0471\\ 
-II & 5 & 0.0151 & 0.0074 \\ 
-\hline
-Total & 332 & 1.000 & 1.000 \\
-\hline
-\end{tabular}
+
+| Genotype | Number | Frequency | Expected |
+|:--------:|:------:|:---------:|:--------:|
+|    SS    |   141  |   0.4247  |  0.4096  |
+|    SF    |   111  |   0.3343  |  0.3507  |
+|    FF    |   28   |   0.0843  |  0.0751  |
+|    SI    |   32   |   0.0964  |  0.1101  | 
+|    FI    |   15   |   0.0452  |  0.0471  |
+|    II    |   5    |   0.0151  |  0.0074  |
+|   Total  |   332  |   1.000   |   1.000  |
 
 Based on Table 1.2 and the example written out above, the frequencies for each of the alleles is:\
 
@@ -108,38 +104,22 @@ Based on the p-value (0.255) there is insufficient evidence that the observed fr
 ## Problem 1.7 - Sol
 Each generation, females will receive one X chromosome from both parents, whereas males will only receive one X chromosome from their mothers. Therefore each generation the males will have the same allele frequency for X-linked alleles as the females in the previous generation, but females will have an allele frequency that is the average from males and females in the previous generation. Therefore with starting allele frequencies of $p_f$ in females and $p_m$ in males, 3 generations of allele frequencies would be as follows:
 
-
-\begin{tabular}{ |c|c|c| } 
-\hline
-Generation & Female Freq. & Male Freq. \\
-\hline
-1 & \( p_f \) & \( p_m \) \\
-\hline
-2 & \( \begin{array}{@{}c@{}} \dfrac{p_f - p_m}{2} \end{array} \) & \( p_f \) \\
-\hline
-3 & \( \begin{array}{@{}c@{}} (\dfrac{p_f - p_m}{2}) + p_f/2 \end{array} \) & \(\begin{array}{@{}c@{}} \dfrac{p_f - p_m}{2} \end{array} \) \\
-\hline
-\end{tabular}
+| Generation | Female Freq | Male Freq. |
+|:--------:|:------:|:---------:|
+|    1    |   \( p_f \)  |   \( p_m \)  | 
+|    2    |   \( \begin{array}{@{}c@{}} \dfrac{p_f - p_m}{2} \end{array} \)  |   \( p_f \)  | 
+|    3    |   \( \begin{array}{@{}c@{}} (\dfrac{p_f - p_m}{2}) + \dfrac{p_f}{2} \end{array} \)   |   \(\begin{array}{@{}c@{}} \dfrac{p_f - p_m}{2} \end{array} \)  | 
 
 If we start with a population in which all females are $A_1A_1$ and all males are $A_2$ (ie females have an $A_1$ allele frequency of 1 and males have a frequency of 0), we can calculate the allele frequencies for subsequent generations based on the pattern we have shown above:
 
-\begin{tabular}{ |c|c|c|c| } 
-\hline
-Generation & F. Freq & M. Freq & F-M Freq. \\
-\hline
-1 & 1 & 0 & 1 \\
-\hline
-2 & 1/2 & 1 & -1/2 \\
-\hline
-3 & 3/4 & 1/2 & 1/4 \\
-\hline
-4 & 5/8 & 3/4 & -1/8 \\
-\hline
-5 & 11/16 & 5/8 & 1/16 \\
-\hline
-6 & 21/32 & 11/16 & -1/32 \\
-\hline
-\end{tabular}
+| Generation | F. Freq | M. Freq | F-M Freq. |
+|:----------:|:------:|:---------:|:--------:|
+|    1     |   1  |   0  |  1  |
+|    2    |   1/2  |   1  |  -1/2  |
+|    3    |   3/4   |   1/2  |  1/4  |
+|    4    |   5/8   |   3/4  |  -1/8  | 
+|    5    |   11/16   |   5/8  |  1/16  |
+|    6    |   21/32    |   11/16  |  -1/32  |
 
 As mentioned above, you can see in the table that each generation males have the same $A_1$ frequency as females in the generation prior and females have the averaged $A_1$ frequency of males and females in the generation prior. Due to this, each generation the difference in $A_1$ frequency between males and females is halved. I have graphed 8 generations below:
 
