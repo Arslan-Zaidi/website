@@ -1,0 +1,106 @@
+---
+title: "PopGen_Chapter2.rmarkdown"
+author: "Nicole, Parisa, Sol"
+date: "2024-09-10"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+#install.packages(blogdown)
+library(blogdown)
+library(ggplot2)
+```
+
+## Problem 2.1 - Sol
+
+In a population of size $N$, there are $2N$ alleles for a given locus (because each diploid individual has 2 copies of each allele). Therefore the chance that a given allele, $A_1$, is chosen at random is $\frac{1}{2N}$ and the chance that it is not chosen is $1-\frac{1}{2N}$. 
+
+Therefore the chance that $A_1$ will not be chosen in 2N rounds with replacement (based on the simulation shown in Fig 2.1 in the book) is $(1-\frac{1}{2N})^{2N}$ (ie: the chance it will not be chosen each round to the power of the number of rounds in the simulation). 
+
+Thus, the probability that it *will* be chosen at least 1x (ie the probability that a particular allele has at least one copy in the next generation) = $1-(1-\frac{1}{2N})^{2N}$
+
+As the book mentions, this becomes independent of $N$ as the population grows very large, therefore we can calculate the probability for any population with an extremely large N based on the following equation from the book:
+
+$(A.7)$ $lim_{\epsilon \rightarrow0}(1+\epsilon x)^{1/\epsilon} = e^x$
+
+We know that as $N$ increases the value of $\frac{1}{2N}$ approaches 0. Thus we can use equation A.7 above with $\epsilon=\frac{1}{2N}$:
+
+$(1-\frac{1}{2N})^{2N} \rightarrow lim_{\frac{1}{2N} \rightarrow0}(1+(\frac{1}{2N}x))^{2N}$ 
+
+for $(1-\frac{1}{2N})^{2N}$ to equal $(1+(\frac{x}{2N}))^{2N}$, x must equal -1.
+
+Therefore, based on equation A.7 where $\epsilon=\frac{1}{2N}$: and $x=-1$:
+
+$lim_{\frac{1}{2N} \rightarrow0}(1-\frac{1}{2N})^{2N} = e^{-1} = 0.37$
+
+Thus the chance the $A_1$ is never chosen (ie does not appear in the next generation in 0.37). 1-0.37 = 0.63. Therefore in any extremely large population where $\frac{1}{2N}\rightarrow0$ the probability that at least one copy of an allele will appear in the next generation is 0.63.
+
+## Problem 2.2 
+
+```{r problem2.2}
+
+```
+
+## Problem 2.3 
+
+```{r problem2.3}
+
+```
+
+## Problem 2.4 
+
+```{r problem2.4}
+
+```
+
+## Problem 2.5 
+
+```{r problem2.5}
+
+```
+
+## Problem 2.6 - Sol
+*Because calligraphic letters don't render correctly into html I will be using $G'$ to represent the calligraphic G in the book.*
+
+Remember that:  
+G = Homozygosity of a population   
+$G'$ = Probability that 2 alleles that differ by origin are identical by state
+
+Based on the problem, we will define the homozygosity of a population (G) as the probability that two alleles chosen at random from the population *with replacement* are identical by state.
+
+First, we want to show that this definition is equivalent to the definition given in Equation 1.3:
+
+$(1.3)$ G=$\sum^{k}_{i=1}p^2_i$
+
+*where $k$ = \#alleles and $p_i$ = frequency of allele $A_i$*
+
+The probability of 2 of the same allele getting chosen for any allele, $A_i$, is $p_i*p_i=p_i^2$  
+(ie the probability of getting $A_i$ * the probability of getting $A_i$  -- since the events are independent)
+
+Summed for all alleles = $\sum^{k}_{i=1}p^2_i$ (which is equation 1.3)
+
+Next, we want to show that:
+
+G$=\frac{1}{2N}+(1-\frac{1}{2N})G'$
+
+Remember that $2N$ is the number of alleles at a given locus in a population (2 * the number of people).
+
+Thus, $\frac{1}{2N}$ is the chance of a specific allele (by origin) being chosen. 
+
+For a given allele, $A_i$, the chance of the same allele by origin being chosen twice (since we are sampling with replacement) = $\frac{1}{2N}$. 
+
+Therefore, the probability of getting two alleles that differ by origin = $1-\frac{1}{2N}$.
+
+As previously defined, $G'$ = the probability of 2 alleles that differ by origin being identical by state. 
+
+Therefore the equation given above (G$=\frac{1}{2N}+(1-\frac{1}{2N})G'$) breaks down to:
+
+*G = (the probability of getting the same allele by origin 2x) + (the probability of getting 2 alleles that are different by origin x the probability of 2 alleles that differ by origin being identical by state)*
+
+This makes sense because there are two ways for two alleles to be identical by state in this scenario: (1) They are identical by origin and (2) they are different by origin but identical by state.
+
+This concept is demonstrated in Fig 2.3 in the book. 
+
