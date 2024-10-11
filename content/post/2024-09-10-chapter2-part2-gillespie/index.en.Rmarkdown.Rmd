@@ -38,10 +38,51 @@ $lim_{\frac{1}{2N} \rightarrow0}(1-\frac{1}{2N})^{2N} = e^{-1} = 0.37$
 
 Thus the chance the $A_1$ is never chosen (ie does not appear in the next generation in 0.37). 1-0.37 = 0.63. Therefore in any extremely large population where $\frac{1}{2N}\rightarrow0$ the probability that at least one copy of an allele will appear in the next generation is 0.63.
 
-## Problem 2.2 
+## Problem 2.2 -- Parisa
 
 ```{r problem2.2}
+library(ggplot2)
+library(reshape2)
 
+
+
+twoN <- 40
+p <- 0.2
+num_generations <- 100
+num_populations <- 5
+
+freq_A1 <- matrix(0, nrow = num_generations, ncol = num_populations)
+
+freq_A1[1, ] <- p
+
+for (pop in 1:num_populations) {
+  for (generation in 2:num_generations) {
+    if (is.na(freq_A1[generation - 1, pop]) || freq_A1[generation - 1, pop] == 0 || freq_A1[generation - 1, pop] == 1) {
+      freq_A1[generation, pop] <- NA  
+    } else {
+      num_A1 <- sum(rbinom(twoN, 1, freq_A1[generation - 1, pop]))
+      freq_A1[generation, pop] <- num_A1 / twoN
+    }
+  }
+}
+freq_df <- as.data.frame(freq_A1)
+freq_df$Generation <- 1:num_generations
+freq_melted <- melt(freq_df, id.vars = "Generation", variable.name = "Population", value.name = "Frequency")
+
+p <- ggplot(freq_melted, aes(x = Generation, y = Frequency, color = Population, group = Population)) +
+  geom_line(size = 1.2) +
+  labs(title = "Genetic Drift: Frequency of A1 over Generations",
+       x = "Generation", y = "Frequency of A1") +
+  theme_minimal() +
+  theme(legend.position = "right",
+        legend.title = element_blank(),
+        plot.title = element_text(hjust = 0.5),
+        legend.justification = c(1, 0.5))
+
+p + theme(legend.position = "top", 
+          legend.direction = "horizontal",
+          legend.box = "horizontal") +
+  guides(color = guide_legend(nrow = 1, byrow = TRUE))
 ```
 
 ## Problem 2.3 
@@ -50,10 +91,42 @@ Thus the chance the $A_1$ is never chosen (ie does not appear in the next genera
 
 ```
 
-## Problem 2.4 
+## Problem 2.4 - Parisa
 
 ```{r problem2.4}
+H0 <- 1
+t <- 0:100 
+N_values <- c(1, 10, 100, 1000000)
 
+results <- data.frame(Generation = rep(t, times = length(N_values)),
+                      H = NA,
+                      G = NA,
+                      N = rep(N_values, each = length(t)))
+
+for (N in N_values) {
+  H <- H0 * (1 - 1/(2*N))^t
+  G <- 1 - H
+  
+  results$H[results$N == N] <- H
+  results$G[results$N == N] <- G
+}
+
+p1 <- ggplot(results, aes(x = Generation, y = H, color = as.factor(N))) +
+  geom_line() +
+  labs(title = "Heterozygosity over Time",
+       y = "H(t)",
+       x = "Generation",
+       color = "N (Population Size)") +
+  theme_minimal()
+print(p1)
+p2 <- ggplot(results, aes(x = Generation, y = G, color = as.factor(N))) +
+  geom_line() +
+  labs(title = "Fixation Probability over Time",
+       y = "G(t)",
+       x = "Generation",
+       color = "N (Population Size)") +
+  theme_minimal()
+print(p2)
 ```
 
 ## Problem 2.5 
