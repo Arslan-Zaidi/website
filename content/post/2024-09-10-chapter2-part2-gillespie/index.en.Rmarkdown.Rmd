@@ -132,6 +132,35 @@ print(p2)
 ## Problem 2.5 
 
 ```{r problem2.5}
+#graph formula 2.4 and 2.5 for N 1 to 100
+library(data.table)
+library(ggplot2)
+
+#create df for simulation
+df = data.table(N = 1:100)
+
+#loop through all N to see if the apprx estimate is close to the exact
+for (n in 1:100){
+  exact = (-log(2)) / (log(1-1/(2*n)))
+  apprx = 2*n*log(2)
+  df[n, 'Exact' := exact]
+  df[n, 'Apprx' := apprx]
+}
+
+#view df
+#head(df)
+
+#melt df to plot all N
+df_melted <- melt(df, id.vars = "N", variable.name = "Sample", value.name = "Rate")
+
+#plot results
+ggplot(df_melted, aes(x = N, y = Rate, color = Sample)) +
+  geom_line() +
+  theme_classic()+
+  scale_colour_manual("", values = c("black",'#b2182b'))+
+  labs(title = "Reduce Ht by Half Simulation", x = "N", y = "Rate",
+       color = "Iterations")
+
 
 ```
 
